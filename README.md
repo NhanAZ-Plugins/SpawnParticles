@@ -1,15 +1,20 @@
 # SpawnParticles
 
-SpawnParticles is a historical PocketMine-MP plugin that places colored dust particles near the default world's spawn point.
+SpawnParticles displays bounded colored dust particles around the default Axolotl-PM world spawn.
 
-## Compatibility and status
+## Compatibility
 
-The manifest declares PocketMine-MP API `1.0.0`. The source uses the old `PluginTask`, `pocketmine\level\particle\DustParticle` and default level APIs. It has not been ported to Axolotl-PM 5 and has no verified current server build or runtime test. Do not install this source on a production Axolotl-PM server.
+- Minimum Axolotl-PM API: `5.0.0`.
+- CI runs PHPStan at maximum level and builds against exact Axolotl-PM API source revisions for `5.0.0` and `5.49.2`.
+- CI starts the built PHAR on Axolotl-PM `5.49.2`.
+- These are the verified compatibility points; intermediate patch releases are not inferred from the matrix.
 
-## Historical behavior
+The particle task runs every 20 ticks and emits 31 particles per run. Each particle uses RGB components from `0` to `255` and a random offset within 10 blocks of the world's spawn. This replaces the historical zero-tick scheduler period and out-of-range color values.
 
-The plugin schedules a repeating task that attempts to create 31 dust particles per run around the default spawn. It has no commands or configuration. The scheduled period is `0` in the original source, and the random color components can exceed the usual RGB range. A future port must define a valid schedule, bounded particle colors and a measured performance budget before claiming equivalent behavior.
+## Build and validation
 
-There is no CI workflow, DevTools PHAR or verified release in this repository. No license file or author field is present. Resolve redistribution rights from the original rights holder before publishing a modified build.
+GitHub Actions uses [DevTools](https://github.com/NhanAZ/DevTools) to run PHPStan at maximum level, build the plugin PHAR and validate its contents. Workflow dependencies and the server artifact are pinned to exact revisions or checksums for reproducibility.
+
+The repository has no `LICENSE` file; no general source reuse license is granted.
 
 For questions about the NhanAZ ecosystem, use [NhanAZ Discord](https://discord.gg/j2X83ujT6c).

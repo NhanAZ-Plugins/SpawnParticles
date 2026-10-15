@@ -1,31 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SpawnParticles;
 
+use pocketmine\color\Color;
 use pocketmine\math\Vector3;
-use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
-use pocketmine\scheduler\PluginTask;
-use pocketmine\level\particle\DustParticle;
+use pocketmine\scheduler\ClosureTask;
+use pocketmine\world\particle\DustParticle;
 
-class Main extends PluginBase implements Listener {
+final class Main extends PluginBase{
+	protected function onEnable() : void{
+		$this->getScheduler()->scheduleRepeatingTask(new ClosureTask(function() : void{
+			$this->spawnParticles();
+		}), ParticleBatch::TICK_INTERVAL);
+	}
 
-public function onEnable() {
-$this->getServer()->getPluginManager()->registerEvents($this, $this);
-$this->getServer()->getScheduler()->scheduleRepeatingTask(new SpawnParticles($this), 0);
-    }
-}
+	private function spawnParticles() : void{
+		$world = $this->getServer()->getWorldManager()->getDefaultWorld();
+		if($world === null){
+			return;
+		}
 
-class SpawnParticles extends PluginTask {
+		$spawn = $world->getSpawnLocation();
+		for($i = 0; $i < ParticleBatch::PARTICLES_PER_RUN; $i++){
+			$sample = ParticleBatch::sample(static fn(int $minimum, int $maximum) : int => random_int($minimum, $maximum));
+			[$offsetX, $offsetY, $offsetZ] = $sample["offset"];
+			[$red, $green, $blue] = $sample["color"];
 
-public function __construct($plugin) {
-$this->plugin = $plugin;
-parent::__construct($plugin);
-}
-
-public function onRun($tick) {
-for ($i = 0; $i <= 30; $i++) {
-$this->plugin->getServer()->getDefaultLevel()->addParticle((new DustParticle(new Vector3($this->plugin->getServer()->getDefaultLevel()->getSafeSpawn()->getX(), $this->plugin->getServer()->getDefaultLevel()->getSafeSpawn()->getY(), $this->plugin->getServer()->getDefaultLevel()->getSafeSpawn()->getZ()), rand(0,300), rand(0,300), rand(0,300), 1))->setComponents($this->plugin->getServer()->getDefaultLevel()->getSafeSpawn()->getX() + rand(-10,10), $this->plugin->getServer()->getDefaultLevel()->getSafeSpawn()->getY() + rand(-10,10), $this->plugin->getServer()->getDefaultLevel()->getSafeSpawn()->getZ() + rand(-10,10)));
-        }
-    }
+			$world->addParticle(
+				new Vector3($spawn->x + $offsetX, $spawn->y + $offsetY, $spawn->z + $offsetZ),
+				new DustParticle(new Color($red, $green, $blue))
+			);
+		}
+	}
 }

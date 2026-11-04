@@ -1,6 +1,14 @@
 # SpawnParticles
 
-SpawnParticles displays bounded colored dust particles around the default Axolotl-PM world spawn.
+Colored dust particles around the Axolotl-PM API 5 default spawn, with a bounded schedule and RGB range.
+
+[![CI](https://github.com/NhanAZ-Plugins/SpawnParticles/actions/workflows/build.yml/badge.svg)](https://github.com/NhanAZ-Plugins/SpawnParticles/actions/workflows/build.yml)
+[![Latest release](https://img.shields.io/github/v/release/NhanAZ-Plugins/SpawnParticles)](https://github.com/NhanAZ-Plugins/SpawnParticles/releases/latest)
+[![Discord](https://img.shields.io/discord/986553214889517088?label=Discord&logo=discord&logoColor=white&color=5865F2)](https://discord.gg/j2X83ujT6c)
+
+## Overview
+
+This plugin targets the PocketMine-MP and Axolotl-PM API 5 ecosystem and is maintained under [NhanAZ-Plugins](https://github.com/NhanAZ-Plugins).
 
 ## Compatibility
 
@@ -16,5 +24,3 @@ The particle task runs every 20 ticks and emits 31 particles per run. Each parti
 GitHub Actions uses [DevTools](https://github.com/NhanAZ/DevTools) to run PHPStan at maximum level, build the plugin PHAR and validate its contents. Workflow dependencies and the server artifact are pinned to exact revisions or checksums for reproducibility.
 
 The repository has no `LICENSE` file; no general source reuse license is granted.
-
-For questions about the NhanAZ ecosystem, use [NhanAZ Discord](https://discord.gg/j2X83ujT6c).

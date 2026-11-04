@@ -21,3 +21,8 @@ The particle task runs every 20 ticks and emits 31 particles per run. Each parti
 GitHub Actions uses [DevTools](https://github.com/NhanAZ/DevTools) to run PHPStan at maximum level, build the plugin PHAR and validate its contents. Workflow dependencies and the server artifact are pinned to exact revisions or checksums for reproducibility.
 
 The repository has no `LICENSE` file; no general source reuse license is granted.
+
+
+## Credits
+
+Authors: NhanAZ.
